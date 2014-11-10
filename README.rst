@@ -2,7 +2,7 @@
 IS 210: Software Application Programming I
 ==========================================
 ------------
-Homework #11
+Homework #12
 ------------
 
 :College: CUNY School of Professional Studies
@@ -14,8 +14,8 @@ Homework #11
 Overview
 ========
 
-This week, we learn about benmarking Python programming techniques. Just
-becuase your code works doesn't mean it is the optimal solution. Sometimes
+This week, we learn about benchmarking Python programming techniques. Just
+because your code works doesn't mean it is the optimal solution. Sometimes
 you have to evaluate two or more solution to the same problem and decide
 which works better for your purposes.
 
@@ -102,8 +102,8 @@ Specifications
 
 .. tip::
 
-    You can retrieve the name of a function object using the ``func
-    .__name__`` built-in method.
+    You can retrieve the name of a function object using the ``func.__name__``
+    built-in method.
 
 
 Task 05: Main Program Execution
@@ -137,9 +137,6 @@ Specifications
     ('bbp', (0.3437209129333496, '3.141592653589793238462643381'))
     ('bellard', (0.7685971260070801, '3.141592653589793238462643383'))
     ('chudnovsky', (23.97059988975525, Decimal('3.141592653589793238462643384')))
-
-
-
 
 
 Submission
