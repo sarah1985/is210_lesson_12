@@ -29,25 +29,25 @@ def stdlib(depth):
     :param depth:
     :return:
     """
-    a = Decimal(1.0)
-    b = Decimal(1.0 / math.sqrt(2))
-    t = Decimal(1.0) / Decimal(4.0)
-    p = Decimal(1.0)
+    num_a = Decimal(1.0)
+    num_b = Decimal(1.0 / math.sqrt(2))
+    num_t = Decimal(1.0) / Decimal(4.0)
+    num_p = Decimal(1.0)
 
-    for i in range(depth):
-        at = Decimal((a + b) / 2)
-        bt = Decimal(math.sqrt(a * b))
-        tt = Decimal(t - p * (a - at) ** 2)
-        pt = Decimal(2 * p)
+    for item in range(depth):
+        num_at = Decimal((num_a + num_b) / 2)
+        num_bt = Decimal(math.sqrt(num_a * num_b))
+        num_tt = Decimal(num_t - num_p * (num_a - num_at) ** 2)
+        num_pt = Decimal(2 * num_p)
 
-        a = at
-        b = bt
-        t = tt
-        p = pt
+        num_a = num_at
+        num_b = num_bt
+        num_t = num_tt
+        num_p = num_pt
 
-    pi = (a + b) ** 2 / (4 * t)
+    num_pi = (num_a + num_b) ** 2 / (4 * num_t)
 
-    return str(pi)
+    return str(num_pi)
 
 
 def bbp(depth):
@@ -58,17 +58,17 @@ def bbp(depth):
     :param depth:
     :return:
     """
-    pi = Decimal(0)
-    k = 0
-    while k < depth:
-        pi += (Decimal(1) / (16 ** k)) * (
+    num_pi = Decimal(0)
+    num_k = 0
+    while num_k < depth:
+        num_pi += (Decimal(1) / (16 ** num_k)) * (
             (Decimal(4) / (8 * k + 1)) -
             (Decimal(2) / (8 * k + 4)) -
             (Decimal(1) / (8 * k + 5)) -
             (Decimal(1) / (8 * k + 6))
         )
-        k += 1
-    return str(pi)
+        num_k += 1
+    return str(num_pi)
 
 
 def bellard(depth):
@@ -81,21 +81,21 @@ def bellard(depth):
     :param depth:
     :return:
     """
-    pi = Decimal(0)
-    k = 0
-    while k < depth:
-        pi += (Decimal(-1) ** k / (1024 ** k)) * (
-            Decimal(256) / (10 * k + 1) +
-            Decimal(1) / (10 * k + 9) -
-            Decimal(64) / (10 * k + 3) -
-            Decimal(32) / (4 * k + 1) -
-            Decimal(4) / (10 * k + 5) -
-            Decimal(4) / (10 * k + 7) -
-            Decimal(1) / (4 * k + 3)
+    num_pi = Decimal(0)
+    num_k = 0
+    while num_k < depth:
+        num_pi += (Decimal(-1) ** num_k / (1024 ** num_k)) * (
+            Decimal(256) / (10 * num_k + 1) +
+            Decimal(1) / (10 * num_k + 9) -
+            Decimal(64) / (10 * num_k + 3) -
+            Decimal(32) / (4 * num_k + 1) -
+            Decimal(4) / (10 * num_k + 5) -
+            Decimal(4) / (10 * num_k + 7) -
+            Decimal(1) / (4 * num_k + 3)
         )
-        k += 1
-    pi = pi * 1 / (2 ** 6)
-    return str(pi)
+        num_k += 1
+    num_pi = num_pi * 1 / (2 ** 6)
+    return str(num_pi)
 
 
 def chudnovsky(depth):
@@ -109,20 +109,20 @@ def chudnovsky(depth):
     :param depth:
     :return:
     """
-    pi = Decimal(0)
-    k = 0
-    while k < depth:
-        pi += (Decimal(-1) ** k) * (
-            Decimal(math.factorial(6 * k)) /
+    num_pi = Decimal(0)
+    num_k = 0
+    while num_k < depth:
+        num_pi += (Decimal(-1) ** num_k) * (
+            Decimal(math.factorial(6 * num_k)) /
             (
-                (math.factorial(k) ** 3) * (math.factorial(3 * k))
-            ) * (13591409 + 545140134 * k) /
-            (640320 ** (3 * k))
+                (math.factorial(num_k) ** 3) * (math.factorial(3 * num_k))
+            ) * (13591409 + 545140134 * num_k) /
+            (640320 ** (3 * num_k))
         )
-        k += 1
-    pi = pi * Decimal(10005).sqrt() / 4270934400
-    pi **= -1
-    return pi
+        num_k += 1
+    num_pi = num_pi * Decimal(10005).sqrt() / 4270934400
+    num_pi **= -1
+    return num_pi
 
 
 class Timer2Class(object):
@@ -143,7 +143,7 @@ class Timer2Class(object):
         repslist = list(range(reps))
         start = self.timer()
 
-        for rep in repslist:
+        for reps in repslist:
             ret = func(*pargs, **kargs)
         elapsed = self.timer() - start
 
@@ -154,7 +154,7 @@ class Timer2Class(object):
 
         best = 2 ** 32
 
-        for rep in range(reps):
+        for reps in range(reps):
             start = self.timer()
             ret = func(*pargs, **kargs)
             elapsed = self.timer() - start
@@ -166,7 +166,7 @@ class Timer2Class(object):
     def bestoftotal(self, reps1, reps2, func, *pargs, **kargs):
         """best of total method"""
 
-        return self.bestof(reps1, total, reps2, func, *pargs, **kargs)
+        return self.bestof(reps1, self.total, reps2, func, *pargs, **kargs)
 
 if __name__ == "__main__":
 
