@@ -123,3 +123,20 @@ def chudnovsky(depth):
     pi = pi * Decimal(10005).sqrt() / 4270934400
     pi **= -1
     return pi
+
+
+class Timer2Class(object):
+    """timer class"""
+
+    timer = 0
+    if sys.platform[:3] == 'win':
+        timer = time.clock
+    else:
+        timer = time.time
+
+    def __init__(self, func, *args, **kwargs):
+        """constructor"""
+
+        self.func = func
+        self.args = args
+        self.kwargs = kwargs
