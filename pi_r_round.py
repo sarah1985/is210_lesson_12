@@ -17,7 +17,7 @@ Works Cited:
 """
 
 import math
-from decimal import *
+from decimal import Decimal
 import time
 import sys
 
@@ -143,8 +143,35 @@ class Timer2Class(object):
         repslist = list(range(reps))
         start = self.timer()
 
-        for i in repslist:
+        for rep in repslist:
             ret = func(*pargs, **kargs)
         elapsed = self.timer() - start
 
         return (elapsed, ret)
+
+    def bestof(self, reps, func, *pargs, **kargs):
+        """best of method"""
+
+        best = 2 ** 32
+
+        for rep in range(reps):
+            start = self.timer()
+            ret = func(*pargs, **kargs)
+            elapsed = self.timer() - start
+            if elapsed < best:
+                best = elapsed
+
+        return (best, ret)
+
+    def bestoftotal(self, reps1, reps2, func, *pargs, **kargs):
+        """best of total method"""
+
+        return self.bestof(reps1, total, reps2, func, *pargs, **kargs)
+
+if __name__ == "__main__":
+
+    n = 1000
+
+    for test in (stdlib, bbp, bellard, chudnovsky):
+        timer2 = Timer2Class(test, n, _reps1=1, _reps=3)
+        print timer2.bestoftotal()
