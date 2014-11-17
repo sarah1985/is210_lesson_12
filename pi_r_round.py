@@ -128,11 +128,7 @@ def chudnovsky(depth):
 class Timer2Class(object):
     """timer class"""
 
-    timer = 0
-    if sys.platform[:3] == 'win':
-        timer = time.clock
-    else:
-        timer = time.time
+    timer = time.clock if sys.platform[:3] == 'win' else time.time
 
     def __init__(self, func, *args, **kwargs):
         """constructor"""
@@ -140,3 +136,15 @@ class Timer2Class(object):
         self.func = func
         self.args = args
         self.kwargs = kwargs
+
+    def total(self, reps, func, *pargs, **kargs):
+        """total method"""
+
+        repslist = list(range(reps))
+        start = self.timer()
+
+        for i in repslist:
+            ret = func(*pargs, **kargs)
+        elapsed = self.timer() - start
+
+        return (elapsed, ret)
