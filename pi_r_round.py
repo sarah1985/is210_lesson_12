@@ -62,10 +62,10 @@ def bbp(depth):
     num_k = 0
     while num_k < depth:
         num_pi += (Decimal(1) / (16 ** num_k)) * (
-            (Decimal(4) / (8 * k + 1)) -
-            (Decimal(2) / (8 * k + 4)) -
-            (Decimal(1) / (8 * k + 5)) -
-            (Decimal(1) / (8 * k + 6))
+            (Decimal(4) / (8 * num_k + 1)) -
+            (Decimal(2) / (8 * num_k + 4)) -
+            (Decimal(1) / (8 * num_k + 5)) -
+            (Decimal(1) / (8 * num_k + 6))
         )
         num_k += 1
     return str(num_pi)
@@ -137,41 +137,44 @@ class Timer2Class(object):
         self.args = args
         self.kwargs = kwargs
 
-    def total(self, reps, func, *pargs, **kargs):
+    def total(self):
         """total method"""
 
-        repslist = list(range(reps))
+        _reps = self.kwargs.pop('_reps', 1000)
+        repslist = list(range(_reps))
         start = self.timer()
 
         for reps in repslist:
-            ret = func(*pargs, **kargs)
+            ret = self.func(*self.args)
         elapsed = self.timer() - start
 
-        return (elapsed, ret)
+        return elapsed, ret
 
-    def bestof(self, reps, func, *pargs, **kargs):
+    def bestof(self):
         """best of method"""
 
         best = 2 ** 32
 
-        for reps in range(reps):
+        _reps = self.kwargs.pop('_reps', 5)
+        for reps in range(_reps):
             start = self.timer()
-            ret = func(*pargs, **kargs)
+            ret = self.func(*self.args)
             elapsed = self.timer() - start
             if elapsed < best:
                 best = elapsed
 
-        return (best, ret)
+        return best, ret
 
-    def bestoftotal(self, reps1, reps2, func, *pargs, **kargs):
+    def bestoftotal(self):
         """best of total method"""
 
-        return self.bestof(reps1, self.total, reps2, func, *pargs, **kargs)
+        _reps1 = self.kwargs.pop('_reps1', 5)
+        return self.func.__name__, min(self.total() for rep in range(_reps1))
 
 if __name__ == "__main__":
 
-    n = 1000
+    num_n = 1000
 
     for test in (stdlib, bbp, bellard, chudnovsky):
-        timer2 = Timer2Class(test, n, _reps1=1, _reps=3)
+        timer2 = Timer2Class(test, num_n, _reps1=1, _reps=3)
         print timer2.bestoftotal()
