@@ -144,7 +144,7 @@ class Timer2Class(object):
         repslist = list(range(_reps))
         start = self.timer()
 
-        for reps in repslist:
+        for _ in repslist:
             ret = self.func(*self.args)
         elapsed = self.timer() - start
 
@@ -156,7 +156,7 @@ class Timer2Class(object):
         best = 2 ** 32
 
         _reps = self.kwargs.pop('_reps', 5)
-        for reps in range(_reps):
+        for _ in range(_reps):
             start = self.timer()
             ret = self.func(*self.args)
             elapsed = self.timer() - start
@@ -169,12 +169,12 @@ class Timer2Class(object):
         """best of total method"""
 
         _reps1 = self.kwargs.pop('_reps1', 5)
-        return self.func.__name__, min(self.total() for rep in range(_reps1))
+        return self.func.__name__, min(self.total() for _ in range(_reps1))
 
 if __name__ == "__main__":
 
-    num_n = 1000
+    NUM_N = 1000
 
     for test in (stdlib, bbp, bellard, chudnovsky):
-        timer2 = Timer2Class(test, num_n, _reps1=1, _reps=3)
+        timer2 = Timer2Class(test, NUM_N, _reps1=1, _reps=3)
         print timer2.bestoftotal()
