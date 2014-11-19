@@ -34,7 +34,7 @@ def stdlib(depth):
     num_t = Decimal(1.0) / Decimal(4.0)
     num_p = Decimal(1.0)
 
-    for item in range(depth):
+    for _ in range(depth):
         num_at = Decimal((num_a + num_b) / 2)
         num_bt = Decimal(math.sqrt(num_a * num_b))
         num_tt = Decimal(num_t - num_p * (num_a - num_at) ** 2)
